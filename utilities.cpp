@@ -13,7 +13,7 @@ struct Returned_skin {
 };
 
 Returned_skin draw_skin(const std::string& collection) {
-  std::random_device rd;
+  static std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<int> dist(0, 1000);
   int random_int = dist(gen);
@@ -36,8 +36,8 @@ Returned_skin draw_skin(const std::string& collection) {
 
   std::string case_path = "Cases/" + collection + "/case.json";
   simdjson::dom::parser parser;
-  simdjson::dom::element case = parser.load(case_path);
-  simdjson::dom::array skins_array = case.get_array();
+  simdjson::dom::element cases = parser.load(case_path);
+  simdjson::dom::array skins_array = cases.get_array();
   
   std::vector<simdjson::dom::element> quality_skins;
 
@@ -59,7 +59,7 @@ Returned_skin draw_skin(const std::string& collection) {
     Skin.skin_ps = "N/A";
     Skin.skin_weapon = "N/A";
     Skin.skin_float = "N/A";
-    Skin.skin_stat_track = "N/A";
+    Skin.skin_stat_track = false;
     return Skin;
   }
 
