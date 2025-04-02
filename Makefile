@@ -1,5 +1,5 @@
 all:
-	g++ -o main main.cpp utilities.cpp -lsimdjson
+	g++ -o main.exe main.cpp utilities.cpp -lsimdjson
 
 clean:
 	rm -f main

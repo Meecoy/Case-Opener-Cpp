@@ -34,10 +34,10 @@ Returned_skin draw_skin(const std::string& collection) {
   int i;
   for (i = 0; i < 7 && random_int >= qualities[i].value; i++);
 
-  std::string chest_path = "Chests/" + collection + "/chest.json";
+  std::string case_path = "Cases/" + collection + "/case.json";
   simdjson::dom::parser parser;
-  simdjson::dom::element chest = parser.load(chest_path);
-  simdjson::dom::array skins_array = chest.get_array();
+  simdjson::dom::element case = parser.load(case_path);
+  simdjson::dom::array skins_array = case.get_array();
   
   std::vector<simdjson::dom::element> quality_skins;
 
