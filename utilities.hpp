@@ -1,7 +1,7 @@
 #ifndef DRAW_SKIN_HPP
 #define DRAW_SKIN_HPP
 
-#include <simdjson.h>
+#include <iostream>
 
 struct Returned_skin {
     std::string skin_title;
@@ -14,7 +14,14 @@ struct Returned_skin {
     bool skin_stat_track;
 };
 
+struct Returned_case {
+  std::string case_title;
+  std::string case_path;
+};
+
 Returned_skin draw_skin(const std::string& collection);
+
+Returned_case* available_cases(int& arr_size);
 
 #endif
 

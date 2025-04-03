@@ -1,5 +1,8 @@
+#include <iostream>
 #include <simdjson.h>
 #include <random>
+#include <filesystem>
+#include <vector>
 
 struct Returned_skin {
   std::string skin_title;
@@ -10,6 +13,11 @@ struct Returned_skin {
   std::string skin_path;
   std::string skin_float;
   bool skin_stat_track;
+};
+
+struct Returned_case {
+  std::string case_title;
+  std::string case_path;
 };
 
 Returned_skin draw_skin(const std::string& collection) {
@@ -102,3 +110,30 @@ Returned_skin draw_skin(const std::string& collection) {
   Skin.skin_stat_track = false;
   return Skin;
 }
+
+Returned_case* available_cases(int& arr_size) {
+  std::string path = "Cases/";
+
+  int count_dir = 0;
+  for (const std::filesystem::directory_entry dirs_entry : std::filesystem::directory_iterator(path)) {
+    if (dirs_entry.is_directory()) {
+      count_dir++;
+    }
+  }
+
+  Returned_case* cases_array = new Returned_case[count_dir];
+
+  int i = 0;
+  for (const std::filesystem::directory_entry cases_entry : std::filesystem::directory_iterator(path)) {
+    if (cases_entry.is_directory()) {
+      cases_array[i] = {
+        cases_entry.path().filename().string(),
+        cases_entry.path().string() + "/case.png"
+      };
+      i++;
+    }
+  }
+  arr_size = count_dir;
+  return cases_array;
+}
+
