@@ -15,19 +15,25 @@ struct Returned_skin {
   bool skin_stat_track;
 };
 
+
+
 struct Returned_case {
   std::string case_title;
   std::string case_path;
 };
 
+
+
 Returned_skin draw_skin(const std::string& collection) {
+  Returned_skin Skin;
+
   static std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<int> dist(0, 1000);
   int random_int = dist(gen);
 
   struct {
-    int value;
+    unsigned int value;
     const char *quality;
   } qualities[] = {
     { 0, "konsumenckiej jakości"},
@@ -44,8 +50,23 @@ Returned_skin draw_skin(const std::string& collection) {
 
   std::string case_path = "Cases/" + collection + "/case.json";
   simdjson::dom::parser parser;
-  simdjson::dom::element cases = parser.load(case_path);
-  simdjson::dom::array skins_array = cases.get_array();
+  simdjson::dom::element skins = parser.load(case_path);
+
+  if (simdjson::error_code error = parser.load(case_path).get(skins); error) {
+    std::cout << error << std::endl;
+    Skin.skin_title = "N/A";
+    Skin.skin_quality = "N/A";
+    Skin.skin_description = "N/A";
+    Skin.skin_path = "N/A";
+    Skin.skin_ps = "N/A";
+    Skin.skin_weapon = "N/A";
+    Skin.skin_float = "N/A";
+    Skin.skin_stat_track = false;
+
+    return Skin;
+  }
+
+  simdjson::dom::array skins_array = skins.get_array();
   
   std::vector<simdjson::dom::element> quality_skins;
 
@@ -57,7 +78,6 @@ Returned_skin draw_skin(const std::string& collection) {
     }
   }
   
-  Returned_skin Skin;
 
   if (quality_skins.empty()) {
     Skin.skin_title = "N/A";
@@ -95,7 +115,7 @@ Returned_skin draw_skin(const std::string& collection) {
   Skin.skin_quality = qualities[i - 1].quality;
 
   std::string skin_float = "0.";
-  std::uniform_int_distribution<int> dist_float(0, 9);
+  std::uniform_int_distribution<char> dist_float(0, 9);
   for (int i = 0; i < 12; i++) {
     skin_float += std::to_string(dist_float(gen)); 
   }
@@ -110,6 +130,8 @@ Returned_skin draw_skin(const std::string& collection) {
   Skin.skin_stat_track = false;
   return Skin;
 }
+
+
 
 Returned_case* available_cases(int& arr_size) {
   std::string path = "Cases/";
@@ -126,10 +148,13 @@ Returned_case* available_cases(int& arr_size) {
   int i = 0;
   for (const std::filesystem::directory_entry cases_entry : std::filesystem::directory_iterator(path)) {
     if (cases_entry.is_directory()) {
-      cases_array[i] = {
+      /*cases_array[i] = {
         cases_entry.path().filename().string(),
         cases_entry.path().string() + "/case.png"
-      };
+      };*/
+
+      cases_array[i].case_title = cases_entry.path().filename().string();
+      cases_array[i].case_path = cases_entry.path().string() + "/case.png";
       i++;
     }
   }
@@ -137,3 +162,52 @@ Returned_case* available_cases(int& arr_size) {
   return cases_array;
 }
 
+
+
+Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
+  std::string case_path = "Cases/" + collection + "/case.json";
+  simdjson::dom::parser parser;
+  simdjson::dom::element skins = parser.load(case_path);
+
+  
+  auto error = parser.load(case_path).get(skins);
+  if (simdjson::error_code error = parser.load(case_path).get(skins); error) {
+    std::cout << error << std::endl;
+    return nullptr;
+  }
+
+  simdjson::dom::array skins_array = skins.get_array();
+
+  int skin_count = 0;
+  for(simdjson::dom::element skin : skins_array) {
+    skin_count++;
+  };
+
+  Returned_skin* available_skins_array = new Returned_skin[skin_count];
+  
+  int i = 0;
+  for(simdjson::dom::element skin : skins_array){
+    std::string_view title, path, quality, weapon;
+    if (skin["title"].get(title) == simdjson::SUCCESS) {
+      available_skins_array[i].skin_title = title;
+    }
+    if (skin["skin"].get(path) == simdjson::SUCCESS) {
+      available_skins_array[i].skin_path = path;
+    }
+    if (skin["quality"].get(quality) == simdjson::SUCCESS) {
+      available_skins_array[i].skin_quality = quality;
+    }
+    if (skin["weapon"].get(weapon) == simdjson::SUCCESS) {
+      available_skins_array[i].skin_weapon = weapon;
+    }
+
+    available_skins_array[i].skin_description = "N/A";
+    available_skins_array[i].skin_ps = "N/A";
+    available_skins_array[i].skin_float = "N/A";
+    available_skins_array[i].skin_stat_track = false;
+    i++;
+  };
+
+  arr_size = skin_count;
+  return available_skins_array;
+} 

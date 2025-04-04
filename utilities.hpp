@@ -23,5 +23,9 @@ Returned_skin draw_skin(const std::string& collection);
 
 Returned_case* available_cases(int& arr_size);
 
+Returned_skin* selected_case_skins(int& arr_size, std::string collection);
+
+
+
 #endif
 
