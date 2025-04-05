@@ -3,6 +3,8 @@
 #include <random>
 #include <filesystem>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 struct Returned_skin {
   std::string skin_title;
@@ -210,4 +212,49 @@ Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
 
   arr_size = skin_count;
   return available_skins_array;
-} 
+}
+
+
+
+void write_to_inventory(Returned_skin skin) {
+  std::string inventory_path = "Inventory/inventory.json";
+
+  simdjson::dom::parser parser;
+  auto inv_results = parser.load(inventory_path);
+
+  std::ostringstream out;
+  out << "[\n";
+
+  bool first = true;
+
+  if (inv_results.error() == simdjson::error_code::SUCCESS) {
+    simdjson::dom::element inventory = inv_results.value();
+
+    if (inventory.is_array()) {
+      simdjson::dom::array inv_array = inventory.get_array();
+
+      for (auto skin_obj : inv_array) {
+        if (!first) out << ",\n";
+        out << skin_obj;
+        first = false;
+      }
+    }
+  }
+
+  if (!first) out << ",\n";
+
+  out << "{\n";
+  out << "  \"title\": \"" << skin.skin_title << "\",\n";
+  out << "  \"description\": \"" << skin.skin_description << "\",\n";
+  out << "  \"ps\": \"" << skin.skin_ps << "\",\n";
+  out << "  \"quality\": \"" << skin.skin_quality << "\",\n";
+  out << "  \"weapon\": \"" << skin.skin_weapon << "\",\n";
+  out << "  \"skin\": \"" << skin.skin_path << "\"\n";
+  out << "}\n";
+
+  out << "]";
+
+  std::ofstream inventory_file(inventory_path);
+  inventory_file << out.str();
+}
+

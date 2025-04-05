@@ -25,7 +25,7 @@ Returned_case* available_cases(int& arr_size);
 
 Returned_skin* selected_case_skins(int& arr_size, std::string collection);
 
-
+void write_to_inventory(Returned_skin skin);
 
 #endif
 

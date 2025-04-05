@@ -14,18 +14,17 @@ int main() {
   std::cout << "Float broni: " << skinek.skin_float << std::endl;
   std::cout << "Stat track: " << skinek.skin_stat_track << std::endl;
   
-  /*int size;
+  int size;
   Returned_case* skrzynki = available_cases(size);
-  
+  std::cout << "Wybrana skrzynka: " << chosen_case << std::endl;
+
   for(int i = 0; i < size; i++){
     std::cout << "Skrzynka: " << skrzynki[i].case_title << "\nObrazek skrzynki: " << skrzynki[i].case_path << std::endl;
   }
 
-  delete [] skrzynki;*/
+  delete [] skrzynki;
   
-  int size;
   Returned_skin* skinki_w_skrzynce = selected_case_skins(size, chosen_case);
-  std::cout << "\nWybrana skrzynka: " << chosen_case << std::endl;
 
   for(int i = 0; i < size; i++) {
     std::cout << "Skin numer " << i + 1 << ": " << skinki_w_skrzynce[i].skin_title << std::endl;
@@ -35,6 +34,8 @@ int main() {
   }
 
   delete [] skinki_w_skrzynce;
+
+  write_to_inventory(skinek); 
 
   return 0;
 }
