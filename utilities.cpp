@@ -172,8 +172,8 @@ Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
   simdjson::dom::element skins = parser.load(case_path);
 
   
-  auto error = parser.load(case_path).get(skins);
-  if (simdjson::error_code error = parser.load(case_path).get(skins); error) {
+  simdjson::error_code error = parser.load(case_path).get(skins);
+  if (error) {
     std::cout << error << std::endl;
     return nullptr;
   }
@@ -184,8 +184,8 @@ Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
   for(simdjson::dom::element skin : skins_array) {
     skin_count++;
   };
-
-  Returned_skin* available_skins_array = new Returned_skin[skin_count];
+  arr_size = skin_count;
+  Returned_skin* available_skins_array = new Returned_skin[arr_size];
   
   int i = 0;
   for(simdjson::dom::element skin : skins_array){
@@ -210,7 +210,6 @@ Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
     i++;
   };
 
-  arr_size = skin_count;
   return available_skins_array;
 }
 
@@ -249,7 +248,9 @@ void write_to_inventory(Returned_skin skin) {
   out << "  \"ps\": \"" << skin.skin_ps << "\",\n";
   out << "  \"quality\": \"" << skin.skin_quality << "\",\n";
   out << "  \"weapon\": \"" << skin.skin_weapon << "\",\n";
-  out << "  \"skin\": \"" << skin.skin_path << "\"\n";
+  out << "  \"skin\": \"" << skin.skin_path << "\",\n";
+  out << "  \"stat_track\": " << (skin.skin_stat_track ? "true" : "false") << ",\n";
+  out << "  \"skin_float\": \"" << skin.skin_float << "\"\n";
   out << "}\n";
 
   out << "]";
@@ -258,3 +259,60 @@ void write_to_inventory(Returned_skin skin) {
   inventory_file << out.str();
 }
 
+
+
+Returned_skin* get_inventory(int& arr_size) {
+  std::string inventory_path = "Inventory/inventory.json";
+  simdjson::dom::parser parser;
+  
+  simdjson::dom::element skins = parser.load(inventory_path); 
+  simdjson::error_code error = parser.load(inventory_path).get(skins);
+
+  if (error) {
+    std::cout << error << std::endl;
+    return nullptr;
+  }
+
+  simdjson::dom::array skins_array = skins.get_array();
+  
+  int count = 0;
+  for(simdjson::dom::element skin : skins_array) {
+    count++;
+  }
+  
+  arr_size = count;
+  Returned_skin* inv_array = new Returned_skin[arr_size];
+
+  int i = 0;
+  for(simdjson::dom::element skin : skins_array) {
+    std::string_view title, description, ps, quality, weapon, path, skin_float;
+    bool stat_track;
+    if (skin["title"].get(title) == simdjson::SUCCESS) {
+      inv_array[i].skin_title = title;
+    }
+    if (skin["description"].get(description) == simdjson::SUCCESS) {
+      inv_array[i].skin_description = description;
+    }
+    if (skin["ps"].get(ps) == simdjson::SUCCESS) {
+      inv_array[i].skin_ps = ps;
+    }
+    if (skin["quality"].get(quality) == simdjson::SUCCESS) {
+      inv_array[i].skin_quality = quality;
+    }
+    if (skin["weapon"].get(weapon) == simdjson::SUCCESS) {
+      inv_array[i].skin_weapon = weapon;
+    }
+    if (skin["skin"].get(path) == simdjson::SUCCESS) {
+      inv_array[i].skin_path = path;
+    }
+    if (skin["stat_track"].get(stat_track) == simdjson::SUCCESS) {
+      inv_array[i].skin_stat_track = stat_track;
+    }
+    if (skin["skin_float"].get(skin_float) == simdjson::SUCCESS) {
+      inv_array[i].skin_float = skin_float;
+    }
+    i++;
+  }
+
+  return inv_array;
+}

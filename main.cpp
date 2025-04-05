@@ -8,7 +8,7 @@ int main() {
   std::cout << "Skinek: " << skinek.skin_title << std::endl;
   std::cout << "Jakość: " << skinek.skin_quality << std::endl;
   std::cout << "Opis: " << skinek.skin_description << std::endl;
-  std::cout << "Post scriptum: " << skinek.skin_ps << std::endl;
+  std::cout << "Postscriptum: " << skinek.skin_ps << std::endl;
   std::cout << "Ścieżka do skina: " << skinek.skin_path << std::endl;
   std::cout << "Rodzaj broni: " << skinek.skin_weapon << std::endl;
   std::cout << "Float broni: " << skinek.skin_float << std::endl;
@@ -36,6 +36,21 @@ int main() {
   delete [] skinki_w_skrzynce;
 
   write_to_inventory(skinek); 
+  
+  Returned_skin* dropniete_skinki = get_inventory(size);
+
+  std::cout << "\nAktualny ekwipunek: \n"; 
+
+  for(int i = 0; i < size; i++) {
+    std::cout << "Dropnięty skinek numer " << i + 1 << ": " << dropniete_skinki[i].skin_title << std::endl;
+    std::cout << "Opis skinka: " << dropniete_skinki[i].skin_description << std::endl;
+    std::cout << "Postscriptum: " << dropniete_skinki[i].skin_ps << std::endl;
+    std::cout << "Jakość: " << dropniete_skinki[i].skin_quality << std::endl;
+    std::cout << "Rodzaj broni: " << dropniete_skinki[i].skin_weapon << std::endl;
+    std::cout << "Ścieżka do skina: " << dropniete_skinki[i].skin_path << std::endl;
+    std::cout << "Float broni: " << dropniete_skinki[i].skin_float << std::endl;
+    std::cout << "Stat track: " << dropniete_skinki[i].skin_stat_track << std::endl;
+  }
 
   return 0;
 }
