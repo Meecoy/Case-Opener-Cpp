@@ -15,6 +15,7 @@ struct Returned_skin {
   std::string skin_path;
   std::string skin_float;
   bool skin_stat_track;
+  unsigned int skin_price;
 };
 
 
@@ -24,6 +25,12 @@ struct Returned_case {
   std::string case_path;
 };
 
+
+
+struct User_data {
+  std::string username;
+  unsigned int money;
+};
 
 
 Returned_skin draw_skin(const std::string& collection) {
@@ -39,11 +46,11 @@ Returned_skin draw_skin(const std::string& collection) {
     const char *quality;
   } qualities[] = {
     { 0, "wojskowej jakości"},
-    { 550, "przemysłowej jakości"},
+    { 350, "przemysłowej jakości"},
     { 675, "spoza obiegu"},
     { 800, "klasy poufne"},
     { 900, "klasy tajne"},
-    { 985, "klasy tajne-kosa"}
+    { 995, "klasy tajne-kosa"}
   };
   
   int i;
@@ -63,7 +70,7 @@ Returned_skin draw_skin(const std::string& collection) {
     Skin.skin_weapon = "N/A";
     Skin.skin_float = "N/A";
     Skin.skin_stat_track = false;
-
+    Skin.skin_price = 0;
     return Skin;
   }
 
@@ -89,6 +96,7 @@ Returned_skin draw_skin(const std::string& collection) {
     Skin.skin_weapon = "N/A";
     Skin.skin_float = "N/A";
     Skin.skin_stat_track = false;
+    Skin.skin_price = 0;
     return Skin;
   }
 
@@ -114,6 +122,11 @@ Returned_skin draw_skin(const std::string& collection) {
   }
 
   Skin.skin_quality = qualities[i - 1].quality;
+
+  Skin.skin_price = random_int * 10 + 101;
+  if (Skin.skin_quality == "tajne-kosa") {
+    Skin.skin_price += 1000;
+  }
 
   std::string skin_float = "0.";
   std::uniform_int_distribution<char> dist_float(0, 9);
@@ -149,11 +162,6 @@ Returned_case* available_cases(int& arr_size) {
   int i = 0;
   for (const std::filesystem::directory_entry cases_entry : std::filesystem::directory_iterator(path)) {
     if (cases_entry.is_directory()) {
-      /*cases_array[i] = {
-        cases_entry.path().filename().string(),
-        cases_entry.path().string() + "/case.png"
-      };*/
-
       cases_array[i].case_title = cases_entry.path().filename().string();
       cases_array[i].case_path = cases_entry.path().string() + "/case.png";
       i++;
@@ -215,7 +223,7 @@ Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
 
 
 void write_to_inventory(Returned_skin skin) {
-  std::string inventory_path = "Inventory/inventory.json";
+  std::string inventory_path = "User/inventory.json";
 
   simdjson::dom::parser parser;
   auto inv_results = parser.load(inventory_path);
@@ -231,7 +239,7 @@ void write_to_inventory(Returned_skin skin) {
     if (inventory.is_array()) {
       simdjson::dom::array inv_array = inventory.get_array();
 
-      for (auto skin_obj : inv_array) {
+      for (simdjson::dom::element skin_obj : inv_array) {
         if (!first) out << ",\n";
         out << skin_obj;
         first = false;
@@ -249,7 +257,8 @@ void write_to_inventory(Returned_skin skin) {
   out << "  \"weapon\": \"" << skin.skin_weapon << "\",\n";
   out << "  \"skin\": \"" << skin.skin_path << "\",\n";
   out << "  \"stat_track\": " << (skin.skin_stat_track ? "true" : "false") << ",\n";
-  out << "  \"skin_float\": \"" << skin.skin_float << "\"\n";
+  out << "  \"skin_float\": \"" << skin.skin_float << "\",\n";
+  out << "  \"price\": " << skin.skin_price << "\n";
   out << "}\n";
 
   out << "]";
@@ -261,7 +270,7 @@ void write_to_inventory(Returned_skin skin) {
 
 
 Returned_skin* get_inventory(int& arr_size) {
-  std::string inventory_path = "Inventory/inventory.json";
+  std::string inventory_path = "User/inventory.json";
   simdjson::dom::parser parser;
   
   simdjson::dom::element skins = parser.load(inventory_path); 
@@ -286,6 +295,7 @@ Returned_skin* get_inventory(int& arr_size) {
   for(simdjson::dom::element skin : skins_array) {
     std::string_view title, description, ps, quality, weapon, path, skin_float;
     bool stat_track;
+    int64_t price;
     if (skin["title"].get(title) == simdjson::SUCCESS) {
       inv_array[i].skin_title = title;
     }
@@ -310,8 +320,32 @@ Returned_skin* get_inventory(int& arr_size) {
     if (skin["skin_float"].get(skin_float) == simdjson::SUCCESS) {
       inv_array[i].skin_float = skin_float;
     }
+    if (skin["price"].get(price) == simdjson::SUCCESS) {
+      inv_array[i].skin_price = price;
+    }
     i++;
   }
 
   return inv_array;
+}
+
+
+
+User_data get_user_info() {
+  std::string user_path = "User/user.json";
+  simdjson::dom::parser parser;
+  simdjson::dom::element user_info = parser.load(user_path);
+  
+  User_data returned_user;
+  std::string_view username;
+  uint64_t money;
+
+  if (user_info["username"].get(username) == simdjson::SUCCESS) {
+    returned_user.username = username;
+  }
+  if (user_info["money"].get(money) == simdjson::SUCCESS) {
+    returned_user.money = money;
+  }
+
+  return returned_user;
 }

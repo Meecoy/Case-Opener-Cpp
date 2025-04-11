@@ -1,0 +1,14 @@
+[
+{"title":"Stalowa Brzoza","description":"Potężny i niezawodny AK-47 to jeden z najbardziej rozpoznawalnych karabinów szturmowych na świecie. Jest najbardziej zabójczy, gdy strzela się krótkimi, kontrolowanymi seriami. Zamek oraz lufa broni pokrywa warstwa chromatycznego lakieru, podczas gdy detale zostały wykonane z brzozowego drewna.","ps":"Zimny Leszek.","quality":"wojskowej jakości","weapon":"AK-47","skin":"Cases/polityczka/Skins/StalowaBrzoza.png","stat_track":false,"skin_float":"0.491689390014","price":1421},
+{
+  "title": "Stalowa Brzoza",
+  "description": "Potężny i niezawodny AK-47 to jeden z najbardziej rozpoznawalnych karabinów szturmowych na świecie. Jest najbardziej zabójczy, gdy strzela się krótkimi, kontrolowanymi seriami. Zamek oraz lufa broni pokrywa warstwa chromatycznego lakieru, podczas gdy detale zostały wykonane z brzozowego drewna.",
+  "ps": "Zimny Leszek.",
+  "quality": "wojskowej jakości",
+  "weapon": "AK-47",
+  "skin": "Cases/polityczka/Skins/StalowaBrzoza.png",
+  "stat_track": true,
+  "skin_float": "0.797745955322",
+  "price": 731
+}
+]

@@ -13,12 +13,13 @@ int main() {
   std::cout << "Rodzaj broni: " << skinek.skin_weapon << std::endl;
   std::cout << "Float broni: " << skinek.skin_float << std::endl;
   std::cout << "Stat track: " << skinek.skin_stat_track << std::endl;
+  std::cout << "Cena: " << skinek.skin_price << std::endl;
   
   int size;
   Returned_case* skrzynki = available_cases(size);
   std::cout << "Wybrana skrzynka: " << chosen_case << std::endl;
 
-  for(int i = 0; i < size; i++){
+  /*for(int i = 0; i < size; i++){
     std::cout << "Skrzynka: " << skrzynki[i].case_title << "\nObrazek skrzynki: " << skrzynki[i].case_path << std::endl;
   }
 
@@ -51,6 +52,10 @@ int main() {
     std::cout << "Float broni: " << dropniete_skinki[i].skin_float << std::endl;
     std::cout << "Stat track: " << dropniete_skinki[i].skin_stat_track << std::endl;
   }
+*/
 
+  User_data uzytkownik = get_user_info();
+  std::cout << "Nazwa uzytkownika: " << uzytkownik.username << std::endl;
+  std::cout << "Ilość pieniędzy: " << uzytkownik.money << std::endl;
   return 0;
 }
