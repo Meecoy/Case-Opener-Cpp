@@ -38,8 +38,7 @@ Returned_skin draw_skin(const std::string& collection) {
     unsigned int value;
     const char *quality;
   } qualities[] = {
-    { 0, "konsumenckiej jakości"},
-    { 300, "wojskowej jakości"},
+    { 0, "wojskowej jakości"},
     { 550, "przemysłowej jakości"},
     { 675, "spoza obiegu"},
     { 800, "klasy poufne"},
@@ -48,7 +47,7 @@ Returned_skin draw_skin(const std::string& collection) {
   };
   
   int i;
-  for (i = 0; i < 7 && random_int >= qualities[i].value; i++);
+  for (i = 0; i < 6 && random_int >= qualities[i].value; i++);
 
   std::string case_path = "Cases/" + collection + "/case.json";
   simdjson::dom::parser parser;
