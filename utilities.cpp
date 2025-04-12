@@ -15,7 +15,7 @@ struct Returned_skin {
   std::string skin_path;
   std::string skin_float;
   bool skin_stat_track;
-  unsigned int skin_price;
+  int skin_price;
 };
 
 
@@ -32,6 +32,7 @@ struct User_data {
   unsigned int money;
 };
 
+// 1. Roll skin from selected case
 
 Returned_skin draw_skin(const std::string& collection) {
   Returned_skin Skin;
@@ -125,7 +126,7 @@ Returned_skin draw_skin(const std::string& collection) {
 
   Skin.skin_price = random_int * 10 + 101;
   if (Skin.skin_quality == "tajne-kosa") {
-    Skin.skin_price += 1000;
+    Skin.skin_price += 1000 + random_int;
   }
 
   std::string skin_float = "0.";
@@ -138,6 +139,7 @@ Returned_skin draw_skin(const std::string& collection) {
 
   if(skin_float[7] == '5') {
     Skin.skin_stat_track = true;
+    Skin.skin_price += 100 + random_int;
     return Skin;
   }
 
@@ -145,7 +147,7 @@ Returned_skin draw_skin(const std::string& collection) {
   return Skin;
 }
 
-
+// 2. Return dynamic array available cases in Case dir and array size  
 
 Returned_case* available_cases(int& arr_size) {
   std::string path = "Cases/";
@@ -171,7 +173,7 @@ Returned_case* available_cases(int& arr_size) {
   return cases_array;
 }
 
-
+// 3. Return all available skins from selected case
 
 Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
   std::string case_path = "Cases/" + collection + "/case.json";
@@ -220,7 +222,7 @@ Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
   return available_skins_array;
 }
 
-
+// 4. Write skin to user inventory
 
 void write_to_inventory(Returned_skin skin) {
   std::string inventory_path = "User/inventory.json";
@@ -267,7 +269,7 @@ void write_to_inventory(Returned_skin skin) {
   inventory_file << out.str();
 }
 
-
+// 5. Return dynamic array of all user skins
 
 Returned_skin* get_inventory(int& arr_size) {
   std::string inventory_path = "User/inventory.json";
@@ -329,7 +331,7 @@ Returned_skin* get_inventory(int& arr_size) {
   return inv_array;
 }
 
-
+// 6. Return struct with username and current money amount
 
 User_data get_user_info() {
   std::string user_path = "User/user.json";
@@ -348,4 +350,32 @@ User_data get_user_info() {
   }
 
   return returned_user;
+}
+
+// 7. Write new money amount or username to user info file
+
+void change_user_data(int money = 0, std::string username = "") {
+  std::string user_path = "User/user.json";
+  simdjson::dom::parser parser;
+  simdjson::dom::element user_info = parser.load(user_path);
+  
+  std::ostringstream out;
+  std::string_view username_json;
+  int64_t money_json;
+  out << "{\n";
+  if (username != "") {
+    out << "  \"username\": \"" << username << "\",\n";
+  }
+  else {
+    if (user_info["username"].get(username_json) == simdjson::SUCCESS) {
+      out << "  \"username\": \"" << username_json << "\",\n";
+    }
+  }
+  if (user_info["money"].get(money_json) == simdjson::SUCCESS) {
+    out << "  \"money\": " << money_json + money << "\n";
+  }
+  out << "}";
+
+  std::ofstream user_file(user_path);
+  user_file << out.str();
 }

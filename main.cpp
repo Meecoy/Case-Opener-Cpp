@@ -57,5 +57,7 @@ int main() {
   User_data uzytkownik = get_user_info();
   std::cout << "Nazwa uzytkownika: " << uzytkownik.username << std::endl;
   std::cout << "Ilość pieniędzy: " << uzytkownik.money << std::endl;
+
+  change_user_data(-200);
   return 0;
 }

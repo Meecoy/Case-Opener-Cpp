@@ -12,7 +12,7 @@ struct Returned_skin {
     std::string skin_path;
     std::string skin_float;
     bool skin_stat_track;
-    int skin_price;
+    unsigned int skin_price;
 };
 
 struct Returned_case {
@@ -22,7 +22,7 @@ struct Returned_case {
 
 struct User_data {
   std::string username;
-  int money;
+  unsigned int money;
 }; 
 
 Returned_skin draw_skin(const std::string& collection);
@@ -36,6 +36,8 @@ void write_to_inventory(Returned_skin skin);
 Returned_skin* get_inventory(int& arr_size);
 
 User_data get_user_info();
+
+void change_user_data(int money = 0, std::string username = "");
 
 #endif
 
