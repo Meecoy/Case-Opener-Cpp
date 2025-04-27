@@ -1,11 +1,11 @@
 [
   {
-    "title": "Sodoma i Gomora",
-    "description": "Strzelanie z dwóch pistoletów Beretta o pojemnych magazynkach jednocześnie zmniejszy celność i wydłuży czas przeładowania. Z drugiej strony da ci to szansę na postrzelanie z dwóch berett o pojemnych magazynkach naraz.",
+    "title": "Reka Wolnego Rynku",
+    "description": "Broń wysokiego ryzyka i wysokich zysków; okryty niesławą AWP to karabin snajperski rozpoznawalny dzięki swojej charakterystycznej polityce - jeden strzał, jeden trup.",
     "ps": "",
     "quality": "przemysłowej jakości",
-    "weapon": "Dwie Beretty",
-    "skin": ""
+    "weapon": "AWP",
+    "skin": "Cases/polityczka/Skins/RekaWolnegoRynku.png"
   },
 
   {
@@ -14,7 +14,7 @@
     "ps": "",
     "quality": "przemysłowej jakości",
     "weapon": "Galil AR",
-    "skin": ""
+    "skin": "Cases/polityczka/Skins/Dewiant.png"
   },
 
   {
@@ -41,7 +41,7 @@
     "ps": "Chuj wie jak to się pisze.",
     "quality": "klasy poufne",
     "weapon": "P250",
-    "skin": "Cases/polityczka/Skins/Ciaa.png"
+    "skin": "Cases/polityczka/Skins/Cziaa.png"
   },
 
   {
@@ -50,14 +50,14 @@
     "ps": "Trzymać zdala od gaśnic",
     "quality": "klasy tajne-kosa",
     "weapon": "knife",
-    "skin": ""
+    "skin": "Cases/polityczka/Skins/Chanuka.png"
   },
 
   {
-    "title": "Gaśnica",
+    "title": "",
     "description": "",
     "ps": "",
-    "quality": "konsumenckiej jakości",
+    "quality": "",
     "weapon": "",
     "skin": ""
   },
@@ -86,6 +86,6 @@
     "ps": "Paliwo lotnicze nie może stopić stalowych prętów.",
     "quality": "klasy poufne",
     "weapon": "AWP",
-    "skin": ""
+    "skin": "Cases/polityczka/Skins/11l9(premium).png"
   }
 ]
