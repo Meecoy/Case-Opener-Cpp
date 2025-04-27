@@ -33,10 +33,11 @@ Returned_skin draw_skin(const std::string& collection, int luck) {
 
   std::string case_path = "Cases/" + collection + "/case.json";
   simdjson::dom::parser parser;
-  simdjson::dom::element skins = parser.load(case_path);
+  simdjson::dom::element skins;
 
   if (simdjson::error_code error = parser.load(case_path).get(skins); error) {
     std::cout << error << std::endl;
+    // return "empty" Skin
     Skin.skin_title = "N/A";
     Skin.skin_quality = "N/A";
     Skin.skin_description = "N/A";
@@ -53,14 +54,14 @@ Returned_skin draw_skin(const std::string& collection, int luck) {
   
   std::vector<simdjson::dom::element> quality_skins;
 
-  for (simdjson::dom::element skin : skins_array) {
-    std::string_view quality;
-    
-    if (skin["quality"].get(quality) == simdjson::SUCCESS && quality == qualities[i - 1].quality) {
-      quality_skins.push_back(skin);
+  if (i > 0) {
+    for (simdjson::dom::element skin : skins_array) {
+      std::string_view quality;
+      if (skin["quality"].get(quality) == simdjson::SUCCESS && quality == qualities[i - 1].quality) {
+        quality_skins.push_back(skin);
+      }
     }
   }
-  
 
   if (quality_skins.empty()) {
     Skin.skin_title = "N/A";
@@ -79,7 +80,7 @@ Returned_skin draw_skin(const std::string& collection, int luck) {
   simdjson::dom::element selected_skin = quality_skins[skin_dist(gen)];
 
   std::string_view title, description, ps, path, weapon;
-  
+
   if (selected_skin["title"].get(title) == simdjson::SUCCESS) {
     Skin.skin_title = std::string(title);
   }
@@ -96,7 +97,11 @@ Returned_skin draw_skin(const std::string& collection, int luck) {
     Skin.skin_weapon = std::string(weapon);
   }
 
-  Skin.skin_quality = qualities[i - 1].quality;
+  if (i > 0) {
+    Skin.skin_quality = qualities[i - 1].quality;
+  } else {
+    Skin.skin_quality = "N/A";
+  }
 
   Skin.skin_price = random_int * 10 + 101;
   if (Skin.skin_quality == "tajne-kosa") {
@@ -105,7 +110,7 @@ Returned_skin draw_skin(const std::string& collection, int luck) {
 
   std::string skin_float = "0.";
   std::uniform_int_distribution<char> dist_float(0, 9);
-  for (int i = 0; i < 12; i++) {
+  for (int j = 0; j < 12; j++) {
     skin_float += std::to_string(dist_float(gen)); 
   }
   
@@ -120,6 +125,7 @@ Returned_skin draw_skin(const std::string& collection, int luck) {
   Skin.skin_stat_track = false;
   return Skin;
 }
+
 
 // 2. Return dynamic array available cases in Case dir and array size  
 
