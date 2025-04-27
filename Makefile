@@ -1,6 +1,6 @@
 all:
-	g++ -o main.exe main.cpp utilities.cpp -lsimdjson
+	g++ -std=c++17 -Ilibs/simdjson/include -Ilibs/simdjson/src main.cpp utilities.cpp libs/simdjson/src/simdjson.cpp -o case_opener.exe
 
 clean:
-	rm -f main
+	rm -f case_opener.exe
 
