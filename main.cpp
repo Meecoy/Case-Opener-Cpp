@@ -58,6 +58,20 @@ int main() {
   std::cout << "Nazwa uzytkownika: " << uzytkownik.username << std::endl;
   std::cout << "Ilość pieniędzy: " << uzytkownik.money << std::endl;
 
-  change_user_data(-200);
+  //change_user_data(200);
+  
+  //sell_skin(1);
+  
+  Case_bot bocik = Case_bot("Bot", 10);
+
+  bool bitwa = bocik.Fight(chosen_case, 4);
+
+  if (bitwa) {
+    std::cout << "Wygrałeś!" << std::endl;
+  } else {
+    std::cout << "Przegrałeś..." << std::endl;
+  }
+
+
   return 0;
 }

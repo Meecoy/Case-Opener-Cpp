@@ -5,36 +5,10 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-
-struct Returned_skin {
-  std::string skin_title;
-  std::string skin_description;
-  std::string skin_ps;
-  std::string skin_quality;
-  std::string skin_weapon;
-  std::string skin_path;
-  std::string skin_float;
-  bool skin_stat_track;
-  int skin_price;
-};
-
-
-
-struct Returned_case {
-  std::string case_title;
-  std::string case_path;
-};
-
-
-
-struct User_data {
-  std::string username;
-  unsigned int money;
-};
+#include "utilities.hpp"
 
 // 1. Roll skin from selected case
-
-Returned_skin draw_skin(const std::string& collection) {
+Returned_skin draw_skin(const std::string& collection, int luck) {
   Returned_skin Skin;
 
   static std::random_device rd;
@@ -55,7 +29,7 @@ Returned_skin draw_skin(const std::string& collection) {
   };
   
   int i;
-  for (i = 0; i < 6 && random_int >= qualities[i].value; i++);
+  for (i = 0; i < 6 && random_int >= qualities[i].value + luck; i++);
 
   std::string case_path = "Cases/" + collection + "/case.json";
   simdjson::dom::parser parser;
@@ -228,7 +202,7 @@ void write_to_inventory(Returned_skin skin) {
   std::string inventory_path = "User/inventory.json";
 
   simdjson::dom::parser parser;
-  auto inv_results = parser.load(inventory_path);
+  simdjson::simdjson_result<simdjson::dom::element> inv_results = parser.load(inventory_path);
 
   std::ostringstream out;
   out << "[\n";
@@ -248,10 +222,26 @@ void write_to_inventory(Returned_skin skin) {
       }
     }
   }
-
+  
   if (!first) out << ",\n";
+  
+  int skin_id = 0;
+
+  if (inv_results.error() == simdjson::error_code::SUCCESS) {
+    simdjson::dom::element inventory = inv_results.value();
+
+    if (inventory.is_array()) {
+      simdjson::dom::array inv_array = inventory.get_array();
+
+      for (simdjson::dom::element skin_obj : inv_array) {
+        skin_id++;
+      }
+    }
+  }
+
 
   out << "{\n";
+  out << "  \"id\": " << skin_id << ",\n";
   out << "  \"title\": \"" << skin.skin_title << "\",\n";
   out << "  \"description\": \"" << skin.skin_description << "\",\n";
   out << "  \"ps\": \"" << skin.skin_ps << "\",\n";
@@ -354,7 +344,7 @@ User_data get_user_info() {
 
 // 7. Write new money amount or username to user info file
 
-void change_user_data(int money = 0, std::string username = "") {
+void change_user_data(int64_t money = 0, std::string username = "") {
   std::string user_path = "User/user.json";
   simdjson::dom::parser parser;
   simdjson::dom::element user_info = parser.load(user_path);
@@ -374,8 +364,108 @@ void change_user_data(int money = 0, std::string username = "") {
   if (user_info["money"].get(money_json) == simdjson::SUCCESS) {
     out << "  \"money\": " << money_json + money << "\n";
   }
+
   out << "}";
 
   std::ofstream user_file(user_path);
   user_file << out.str();
 }
+
+// 8. Sell user skin
+
+void sell_skin(int id) {
+  std::string inventory_path = "User/inventory.json";
+  simdjson::dom::parser parser;
+  simdjson::dom::element inv_info;
+  
+  if (parser.load(inventory_path).get(inv_info) != simdjson::SUCCESS) {
+    std::cerr << "Failed to load inventory." << std::endl;
+    return;
+  }
+
+  simdjson::dom::array inv_array = inv_info.get_array();
+  std::ostringstream out;
+  out << "[\n";
+
+  bool first = true;
+  int64_t skin_price = 0;
+  bool skin_found = false;
+
+  for (simdjson::dom::element skin_obj : inv_array) {
+    int64_t skin_id;
+    if (skin_obj["id"].get(skin_id) == simdjson::SUCCESS && skin_id == id) {
+      // Get skin price and skip writing this skin
+        if(skin_obj["price"].get(skin_price) == simdjson::SUCCESS){
+          skin_found = true;
+          continue;
+      }
+    }
+
+    if (!first) out << ",\n";
+    out << skin_obj;
+    first = false;
+  }
+
+  out << "\n]";
+
+  if (skin_found) {
+    // Write the updated inventory back
+    std::ofstream file(inventory_path);
+    file << out.str();
+
+    // Update user's money
+    change_user_data(skin_price); // Adds skin_price to user money
+  } else {
+    std::cerr << "Skin with ID " << id << " not found." << std::endl;
+  }
+}
+
+Case_bot::Case_bot(const std::string& name, int luck_factor) : bot_name(name), luck(luck_factor) {}
+  
+void Case_bot::set_bot_name (const std::string& name) {
+  bot_name = name;
+}
+
+void Case_bot::set_luck (int luck_factor) {
+  luck = luck_factor;
+}
+
+std::string Case_bot::get_bot_name () const {return bot_name;}
+int Case_bot::get_luck () const {return luck;}
+
+bool Case_bot::Fight(const std::string& collection, int number_of_rolls){
+
+  int player_skins_value = 0;
+  int bot_skins_value = 0;
+
+  std::vector<Returned_skin> player_skins;
+  std::vector<Returned_skin> bot_skins;
+
+  for(int i = 0; i < number_of_rolls; i++){
+    Returned_skin player_skin = draw_skin(collection, luck);
+    player_skins_value += player_skin.skin_price;
+    player_skins.push_back(player_skin);
+  }
+
+  for(int i = 0; i < number_of_rolls; i++){
+    Returned_skin bot_skin = draw_skin(collection, luck);
+    bot_skins_value += bot_skin.skin_price;
+    bot_skins.push_back(bot_skin);
+  }
+
+  if(player_skins_value > bot_skins_value){ 
+    for(const Returned_skin& skin : player_skins){
+      write_to_inventory(skin);
+    }
+
+    for(const Returned_skin& bot_skin : bot_skins){
+      write_to_inventory(bot_skin);
+    }
+
+    return true;
+
+  } else {
+    return false;
+  } 
+}
+
