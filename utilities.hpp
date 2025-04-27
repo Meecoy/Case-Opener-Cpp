@@ -25,11 +25,11 @@ struct User_data {
   unsigned int money;
 }; 
 
-Returned_skin draw_skin(const std::string& collection);
+Returned_skin draw_skin(const std::string& collection, int luck = 0);
 
 Returned_case* available_cases(int& arr_size);
 
-Returned_skin* selected_case_skins(int& arr_size, std::string collection);
+Returned_skin* selected_case_skins(int& arr_size, const std::string& collection);
 
 void write_to_inventory(Returned_skin skin);
 
@@ -37,7 +37,25 @@ Returned_skin* get_inventory(int& arr_size);
 
 User_data get_user_info();
 
-void change_user_data(int money = 0, std::string username = "");
+void change_user_data(int money = 0, const std::string& username = "");
+
+void sell_skin(int id);
+
+class Case_bot {
+private:
+  std::string bot_name;
+  int luck;
+public:
+  Case_bot(const std::string& name, int luck_factor);
+
+  void set_bot_name(const std::string& name);
+  void set_luck(int luck_factor);
+
+  std::string get_bot_name() const;
+  int get_luck() const;
+
+  bool Fight(const std::string& collection, int number_of_rolls);
+};
 
 #endif
 
