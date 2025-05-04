@@ -1,0 +1,91 @@
+[
+  {
+    "title": "Reka Wolnego Rynku",
+    "description": "Broń wysokiego ryzyka i wysokich zysków; okryty niesławą AWP to karabin snajperski rozpoznawalny dzięki swojej charakterystycznej polityce - jeden strzał, jeden trup.",
+    "ps": "",
+    "quality": "przemysłowej jakości",
+    "weapon": "AWP",
+    "skin": "Cases/polityczka/Skins/RekaWolnegoRynku.png"
+  },
+
+  {
+    "title": "Dewiant",
+    "description": "Tańsza opcja wśród trzech unikalnych dla terrorystów karabinów szturmowych - Galil AR to doborowa broń do starć na średnim i dalekim zasięgu.",
+    "ps": "",
+    "quality": "przemysłowej jakości",
+    "weapon": "Galil AR",
+    "skin": "Cases/polityczka/Skins/Dewiant.png"
+  },
+
+  {
+    "title": "Skąpiec",
+    "description": "Praktycznie rzecz biorąc pudełko, z którego lecą kule - pistolet maszynowy MAC-10 szczyci się wysoką szybkostrzelnością, lecz jest również niecelny i ma duży rozrzut. Broń została pokryta wzorem złotych monet oraz ręcznie wyszywaną zawieszką Izraela.",
+    "ps": "Wiedz kto rządzi światem.",
+    "quality": "klasy tajne",
+    "weapon": "MAC-10",
+    "skin": "Cases/polityczka/Skins/Skapiec.png"
+  },
+
+  {
+    "title": "Niemiecki Agent",
+    "description": "Niezrozumiałe drugie dziecko w rodzinie pistoletów maszynowych - mały magazynek UMP45 to jedyna wada tej wszechstronnej broni do starć na krótkim zasięgu. Ten egzemplarz został ozdobiony flagą Niemiec, wraz z parą wizerunków szpiega pracującego dla nich w Polsce.",
+    "ps": "Für Deutschland! ~ Donald Tusk.",
+    "quality": "przemysłowej jakości",
+    "weapon": "UMP-45",
+    "skin": "Cases/polityczka/Skins/NiemieckiAgent.png"
+  },
+
+  {
+    "title": "Cziłała",
+    "description": "Broń o niskim odrzucie i wysokiej szybkostrzelności - P250 to dość tani sposób na pozbycie się opancerzonych wrogów.",
+    "ps": "Chuj wie jak to się pisze.",
+    "quality": "klasy poufne",
+    "weapon": "P250",
+    "skin": "Cases/polityczka/Skins/Cziaa.png"
+  },
+
+  {
+    "title": "Chanuka",
+    "description": "",
+    "ps": "Trzymać zdala od gaśnic",
+    "quality": "klasy tajne-kosa",
+    "weapon": "knife",
+    "skin": "Cases/polityczka/Skins/Chanuka.png"
+  },
+
+  {
+    "title": "",
+    "description": "",
+    "ps": "",
+    "quality": "",
+    "weapon": "",
+    "skin": ""
+  },
+
+  {
+    "title": "Gierek Cukierek",
+    "description": "Łatwo rozpoznawalna przez unikatowy układ bullpup, P90 to świetna broń do strzelania w ruchu, gdyż posiada bardzo pojemny magazynek i niski odrzut.",
+    "ps": "Chcesz cukierka idź do Gierka.",
+    "quality": "spoza obiegu",
+    "weapon": "P90",
+    "skin": "Cases/polityczka/Skins/GierekCukierek.png"
+  },
+
+  {
+    "title": "Stalowa Brzoza",
+    "description": "Potężny i niezawodny AK-47 to jeden z najbardziej rozpoznawalnych karabinów szturmowych na świecie. Jest najbardziej zabójczy, gdy strzela się krótkimi, kontrolowanymi seriami. Zamek oraz lufa broni pokrywa warstwa chromatycznego lakieru, podczas gdy detale zostały wykonane z brzozowego drewna.",
+    "ps": "Zimny Leszek.",
+    "quality": "wojskowej jakości",
+    "weapon": "AK-47",
+    "skin": "Cases/polityczka/Skins/StalowaBrzoza.png"
+  },
+
+  {
+    "title": "11/9",
+    "description": "Broń wysokiego ryzyka i wysokich zysków; okryty niesławą AWP to karabin snajperski rozpoznawalny dzięki swojej charakterystycznej polityce - jeden strzał, jeden trup.",
+    "ps": "Paliwo lotnicze nie może stopić stalowych prętów.",
+    "quality": "klasy poufne",
+    "weapon": "AWP",
+    "skin": "Cases/polityczka/Skins/11l9(premium).png"
+  }
+]
