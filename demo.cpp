@@ -4,6 +4,14 @@
 #include <cstdlib>
 
 // ========================================
+// Switching screen
+// For exaple lets say one screen in entirely managed on main fucntion "titleScreen"
+// And then when a specific action occurs
+// titleScreen() is stopped and "mainScreen()" is now being run
+// + titleScreen() needs to be unloaded (extra function for that)
+// ========================================
+
+// ========================================
 // IF U ON KNO!
 // "override" overriding a fucntion from parent's class
 // "virtual" function can be overridden later on
