@@ -4,14 +4,6 @@
 #include <cstdlib>
 
 // ========================================
-// Switching screen
-// For exaple lets say one screen in entirely managed on main fucntion "titleScreen"
-// And then when a specific action occurs
-// titleScreen() is stopped and "mainScreen()" is now being run
-// + titleScreen() needs to be unloaded (extra function for that)
-// ========================================
-
-// ========================================
 // IF U ON KNO!
 // "override" overriding a fucntion from parent's class
 // "virtual" function can be overridden later on
@@ -24,6 +16,178 @@ const int WIN_W = 800;
 const int WIN_H = 600;
 const char* TITLE = "Raylib Window";
 const int FPS = 60;
+
+enum class Screen {
+    TITLE,
+    CASE
+};
+
+class App {
+
+    public:
+        App(int width, int height, const char* title);
+        ~App();
+    
+        void run();
+    
+    private:
+        int winW;
+        int winH;
+        const char* title;
+        Screen currentScreen;
+
+        std::vector<Sprite*> visibleGroup;
+        Texture2D skinTextureDB[8];
+        Texture2D drawnSkinTexture;
+    
+        void update();
+        void render();
+    
+        void initTitleScreen();
+        void updateTitleScreen();
+        void renderTitleScreen();
+        void unloadTitleScreen();
+    
+        void initCaseScreen();
+        void updateCaseScreen();
+        void renderCaseScreen();
+        void unloadCaseScreen();
+    };
+
+App::App(int width, int height, const char* title)
+    : winW(width), winH(height), title(title), currentScreen(Screen::TITLE) {
+    InitWindow(winW, winH, title);
+    SetTargetFPS(FPS);
+    initTitleScreen();
+}
+
+App::~App() {
+    CloseWindow();
+}
+
+void App::run() {
+    while (!WindowShouldClose()) {
+        update();
+
+        BeginDrawing();
+
+        ClearBackground(Color{25, 25, 25, 255});
+
+        render();
+
+        EndDrawing();
+    }
+}
+
+void App::update() {
+    switch (currentScreen) {
+        case Screen::TITLE: updateTitleScreen(); break;
+        case Screen::CASE: updateCaseScreen(); break;
+        default: break;
+    }
+}
+
+void App::render() {
+    switch (currentScreen) {
+        case Screen::TITLE: renderTitleScreen(); break;
+        case Screen::CASE: renderCaseScreen(); break;
+        default: break;
+    }
+}
+
+void App::initTitleScreen() {
+    visibleGroup.clear();
+}
+
+void App::initCaseScreen() {
+    skinTextureDB[0] = LoadTexture("Cases/polityczka/Skins/Chanuka.png");
+    skinTextureDB[1] = LoadTexture("Cases/polityczka/Skins/Skapiec.png");
+    skinTextureDB[2] = LoadTexture("Cases/polityczka/Skins/GierekCukierek.png");
+    skinTextureDB[3] = LoadTexture("Cases/polityczka/Skins/Dewiant.png");
+    skinTextureDB[4] = LoadTexture("Cases/polityczka/Skins/11l9(premium).png");
+    skinTextureDB[5] = LoadTexture("Cases/polityczka/Skins/Cziaa.png");
+    skinTextureDB[6] = LoadTexture("Cases/polityczka/Skins/NiemieckiAgent.png");
+    skinTextureDB[7] = LoadTexture("Cases/polityczka/Skins/StalowaBrzoza.png");
+    drawnSkinTexture = skinTextureDB[0];
+
+    visibleGroup.clear();
+
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+}
+
+void App::updateTitleScreen() {
+    if (IsKeyPressed(KEY_ENTER)) {
+        unloadTitleScreen();
+        initCaseScreen();
+        currentScreen = Screen::CASE;
+    }
+}
+
+void App::updateCaseScreen() {
+    float dt = GetFrameTime();
+
+    // Update all sprites
+    for (int i = 0; i < visibleGroup.size();) {
+        visibleGroup[i]->update(dt);
+        if (visibleGroup[i]->shouldRemove()) {
+            delete visibleGroup[i];
+            visibleGroup.erase(visibleGroup.begin() + i);
+        } else {
+            i++;
+        }
+    }
+
+    // Press SPACE to add items
+    if (IsKeyPressed(KEY_SPACE)) {
+        for (int i = 0; i < 82; i++) {
+            Texture2D texture = (i == 78) ? drawnSkinTexture : skinTextureDB[rand() % 8];
+            CaseItem* ci = new CaseItem({ winW + i * -150.0f, 400 }, { 128, 128 }, texture, { 200, 200, 200, 64 });
+            visibleGroup.push_back(ci);
+        }
+    }
+
+    // Check for stopped CaseItem
+    if (visibleGroup.size() > 4) {
+        CaseItem* ci = dynamic_cast<CaseItem*>(visibleGroup[4]);
+        if (ci && ci->isStopped()) {
+            Item* item = new Item({ 150, 150 }, { 128, 128 }, drawnSkinTexture, { 200, 200, 200, 64 });
+            visibleGroup.push_back(item);
+        }
+    }
+}
+
+void App::unloadTitleScreen() {
+    for (Sprite* s : visibleGroup)
+    {
+        delete s;
+    }
+    visibleGroup.clear();
+
+    // for (auto& texture : skinTextureDB)
+    // {
+    //     UnloadTexture(texture);
+    // }
+}
+
+void App::unloadCaseScreen() {
+    for (Sprite* s : visibleGroup)
+    {
+        delete s;
+    }
+    visibleGroup.clear();
+
+    for (Texture2D& txt : skinTextureDB) {
+        UnloadTexture(txt);
+    }
+}
+
+void App::renderTitleScreen() {}
+
+void App::renderCaseScreen() {
+    for (Sprite* sprite : visibleGroup) {
+        sprite->draw();
+    }
+}
 
 // Base sprite class
 class Sprite
@@ -115,97 +279,104 @@ class CaseItem : public Sprite
         }
 };
 
-int main()
-{
-    InitWindow(WIN_W, WIN_H, TITLE);
-
-    SetTargetFPS(FPS);
-
-    // Create skin's textures database
-    Texture2D skinTextureDB[] =
-    {
-        LoadTexture("Cases/polityczka/Skins/Chanuka.png"),
-        LoadTexture("Cases/polityczka/Skins/Skapiec.png"),
-        LoadTexture("Cases/polityczka/Skins/GierekCukierek.png"),
-        LoadTexture("Cases/polityczka/Skins/Dewiant.png"),
-        LoadTexture("Cases/polityczka/Skins/11l9(premium).png"),
-        LoadTexture("Cases/polityczka/Skins/Cziaa.png"),
-        LoadTexture("Cases/polityczka/Skins/NiemieckiAgent.png"),
-        LoadTexture("Cases/polityczka/Skins/StalowaBrzoza.png"),
-    };
-    const Texture2D drawnSkinTexture = skinTextureDB[0];
-    
-    // Sprite groups
-    std::vector<Sprite*> visibleGroup;
-
-    // Random seed
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
-
-    while (!WindowShouldClose())
-    {
-        float dt = GetFrameTime();
-
-        BeginDrawing();
-
-        ClearBackground(Color{25, 25, 25, 255});
-
-        // Update sprites
-        for (int i = 0; i < visibleGroup.size(); )
-        {
-            visibleGroup[i]->update(dt);
-
-            // Remove if out of screen
-            if (visibleGroup[i]->shouldRemove())
-            {
-                delete visibleGroup[i];
-                visibleGroup.erase(visibleGroup.begin() + i);
-            } else
-            {
-                i++;
-            }
-        }
-
-        // Add case items when SPACE is pressed
-        // if (IsKeyPressed(KEY_SPACE)) // imo to powinno dzialac, ale nie wiem
-        if (IsKeyPressed(32)) // ???
-        {
-            for (int i = 0; i < 82; i++)
-            {
-                Texture2D texture = (i == 78) ? drawnSkinTexture : skinTextureDB[rand() % 8];
-                CaseItem* ci = new CaseItem({ WIN_W + i * -150.0f, 400 }, { 128, 128 }, texture, { 200, 200, 200, 64 });
-                visibleGroup.push_back(ci);
-            }
-        }
-
-        // Check if 5th sprite is a CaseItem and has stopped, then add Item
-        if (visibleGroup.size() > 4)
-        {
-            // "visibleGroup[4]" is a pointer
-            // So we're using dynamic_cast to conver that pointer to a pointer to a "CaseItem"
-            CaseItem* ci = dynamic_cast<CaseItem*>(visibleGroup[4]);
-            if (ci && ci->isStopped())
-            {
-                Item* item = new Item({ 150, 150 }, { 128, 128 }, drawnSkinTexture, { 200, 200, 200, 64 });
-                visibleGroup.push_back(item);
-            }
-        }
-
-        EndDrawing();
-    }
-
-    // Delete, unload everythinh
-    for (Sprite* s : visibleGroup)
-    {
-        delete s;
-    }
-
-    for (auto& texture : skinTextureDB)
-    {
-        UnloadTexture(texture);
-    }
-
-    CloseWindow();
+// WORK IN PROGRESS =============================
+int main() {
+    App app(WIN_W, WIN_H, TITLE);
+    app.run();
 
     return 0;
 }
+
+// int main() {
+//     InitWindow(WIN_W, WIN_H, TITLE);
+// 
+//     SetTargetFPS(FPS);
+// 
+//     // Create skin's textures database
+//     Texture2D skinTextureDB[] =
+//     {
+//         LoadTexture("Cases/polityczka/Skins/Chanuka.png"),
+//         LoadTexture("Cases/polityczka/Skins/Skapiec.png"),
+//         LoadTexture("Cases/polityczka/Skins/GierekCukierek.png"),
+//         LoadTexture("Cases/polityczka/Skins/Dewiant.png"),
+//         LoadTexture("Cases/polityczka/Skins/11l9(premium).png"),
+//         LoadTexture("Cases/polityczka/Skins/Cziaa.png"),
+//         LoadTexture("Cases/polityczka/Skins/NiemieckiAgent.png"),
+//         LoadTexture("Cases/polityczka/Skins/StalowaBrzoza.png"),
+//     };
+//     const Texture2D drawnSkinTexture = skinTextureDB[0];
+// 
+//     // Sprite groups
+//     std::vector<Sprite*> visibleGroup;
+// 
+//     // Random seed
+//     std::srand(static_cast<unsigned int>(std::time(nullptr)));
+// 
+// 
+//     while (!WindowShouldClose())
+//     {
+//         float dt = GetFrameTime();
+// 
+//         BeginDrawing();
+// 
+//         ClearBackground(Color{25, 25, 25, 255});
+// 
+//         // Update sprites
+//         for (int i = 0; i < visibleGroup.size(); )
+//         {
+//             visibleGroup[i]->update(dt);
+// 
+//             // Remove if out of screen
+//             if (visibleGroup[i]->shouldRemove())
+//             {
+//                 delete visibleGroup[i];
+//                 visibleGroup.erase(visibleGroup.begin() + i);
+//             } else
+//             {
+//                 i++;
+//             }
+//         }
+// 
+//         // Add case items when SPACE is pressed
+//         // if (IsKeyPressed(KEY_SPACE)) // imo to powinno dzialac, ale nie wiem
+//         if (IsKeyPressed(32)) // ???
+//         {
+//             for (int i = 0; i < 82; i++)
+//             {
+//                 Texture2D texture = (i == 78) ? drawnSkinTexture : skinTextureDB[rand() % 8];
+//                 CaseItem* ci = new CaseItem({ WIN_W + i * -150.0f, 400 }, { 128, 128 }, texture, { 200, 200, 200, 64 });
+//                 visibleGroup.push_back(ci);
+//             }
+//         }
+// 
+//         // Check if 5th sprite is a CaseItem and has stopped, then add Item
+//         if (visibleGroup.size() > 4)
+//         {
+//             // "visibleGroup[4]" is a pointer
+//             // So we're using dynamic_cast to conver that pointer to a pointer to a "CaseItem"
+//             CaseItem* ci = dynamic_cast<CaseItem*>(visibleGroup[4]);
+//             if (ci && ci->isStopped())
+//             {
+//                 Item* item = new Item({ 150, 150 }, { 128, 128 }, drawnSkinTexture, { 200, 200, 200, 64 });
+//                 visibleGroup.push_back(item);
+//             }
+//         }
+// 
+//         EndDrawing();
+//     }
+// 
+//     // Delete, unload everythinh
+//     for (Sprite* s : visibleGroup)
+//     {
+//         delete s;
+//     }
+// 
+//     for (auto& texture : skinTextureDB)
+//     {
+//         UnloadTexture(texture);
+//     }
+// 
+//     CloseWindow();
+// 
+//     return 0;
+// }
