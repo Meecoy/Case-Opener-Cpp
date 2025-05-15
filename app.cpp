@@ -21,7 +21,7 @@ const float ITEM_HEIGHT = 128.0f;
 const float SPACING = 150.0f;
 const int TOTAL_ITEMS = 100;
 const int WINNING_INDEX = 78;
-const float ROLL_DURATION = 4.5f;
+const float ROLL_DURATION = 1.5f;
 
 struct CaseItem {
     Texture2D texture;
