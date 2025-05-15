@@ -1,8 +1,16 @@
 #include "libs/raylib/src/raylib.h"
+#include "utilities.hpp"
+#include "simdjson.h"
+
 #include <vector>
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
+#include <random>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <filesystem>
 
 const int WIN_W = 800;
 const int WIN_H = 600;
