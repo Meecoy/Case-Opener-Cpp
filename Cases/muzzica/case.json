@@ -1,5 +1,4 @@
-[
-    {
+  {
       "title": "Przekorny Los",
       "description": "Stworzony w Szwajcarii doborowy pistolet maszynowy MP9 to ergonomiczna broń polimerowa, ceniona przez prywatne firmy ochroniarskie.",
       "ps": "",
@@ -9,39 +8,39 @@
     },
   
     {
-        "title": "",
-        "description": "",
-        "ps": "",
-        "quality": "",
-        "weapon": "",
-        "skin": ""
+        "title": "Pszczolka Maja",
+        "description": "Tańsza opcja dla graczy bez gotówki. FAMAS efektywnie wypełnia lukę między drogimi karabinami a mniej efektywnymi pistoletami maszynowymi.",
+        "ps": "Gdzieś jest, lecz nie wiadomo gdzie...",
+        "quality": "wojskowej jakości",
+        "weapon": "FAMAS",
+        "skin": "Cases/muzzica/Skins/PszczolkaMaja.png"
     },
   
     {
-        "title": "",
-        "description": "",
+        "title": "S-M-O-K",
+        "description": "Posiadający mniejszy magazynek niż jego niewytłumiony odpowiednik, karabin M4A1-S zapewnia cichsze strzały, mniejszy odrzut i lepszą celność.",
         "ps": "",
-        "quality": "",
-        "weapon": "",
-        "skin": ""
+        "quality": "przemysłowej jakości",
+        "weapon": "M4A1-S",
+        "skin": "Cases/muzzica/Skins/SMOK.png"
     },
   
     {
-        "title": "",
-        "description": "",
-        "ps": "",
-        "quality": "",
-        "weapon": "",
-        "skin": ""
+        "title": "Étude Op. 25, No. 5 in E Minor 'Wrong Note'",
+        "description": "XM1014 to potężna strzelba półautomatyczna, która swoją cenę rekompensuje możliwością szybkiego wypełnienia dowolnego pomieszczenia ołowiem.",
+        "ps": "Nawet nie próbuje tego czytać",
+        "quality": "spoza obiegu",
+        "weapon": "XM1014",
+        "skin": "Cases/muzzica/Skins/WrongNote.png"
     },
   
     {
-        "title": "",
-        "description": "",
-        "ps": "",
-        "quality": "",
-        "weapon": "",
-        "skin": ""
+        "title": "Parostatek",
+        "description": "Celny i potężny karabin szturmowy AUG z lunetą rekompensuje długi czas przeładowania niskim rozrzutem i wysoką szybkostrzelnością.",
+        "ps": "Lepszy od Titanica",
+        "quality": "przemysłowej jakości",
+        "weapon": "AUG",
+        "skin": "Cases/muzzica/Skins/Parostatel.png"
     },
   
     {
