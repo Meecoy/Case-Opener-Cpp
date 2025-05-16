@@ -80,6 +80,7 @@ void DrawSkin(const std::string& case_name, int luck) {
     bool rolling = false;
     bool resultShown = false;
 
+    // Main loop
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
 
@@ -89,7 +90,7 @@ void DrawSkin(const std::string& case_name, int luck) {
             final_skin = draw_skin(case_name, luck);
             Texture2D winnerTex = LoadTexture(final_skin.skin_path.c_str());
             winningTexture = winnerTex;
-
+            
             for (int i = 0; i < TOTAL_ITEMS; i++) {
                 bool isWinner = (i == WINNING_INDEX);
                 Texture2D tex = isWinner ? winnerTex : textureDB[std::rand() % textureDB.size()];
@@ -120,6 +121,7 @@ void DrawSkin(const std::string& case_name, int luck) {
         BeginDrawing();
         ClearBackground({ 25, 25, 25, 255 });
 
+        // Draw skins
         for (auto& item : items) {
             item.Draw(scrollOffset);
         }
@@ -149,6 +151,7 @@ void DrawSkin(const std::string& case_name, int luck) {
         EndDrawing();
     }
 
+    // Unload textures and clear list
     for (auto& tex : textureDB) UnloadTexture(tex);
     UnloadTexture(winningTexture);
     delete[] available_skins;
@@ -161,6 +164,7 @@ int main() {
     std::string selected_case = "polityczka";
     int luck = 0;
 
+    // Run the main loop
     DrawSkin(selected_case, luck);
 
     CloseWindow();
