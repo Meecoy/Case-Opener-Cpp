@@ -155,7 +155,7 @@ Returned_case* available_cases(int& arr_size) {
 
 // 3. Return all available skins from selected case
 
-Returned_skin* selected_case_skins(int& arr_size, const std::string collection){
+Returned_skin* selected_case_skins(int& arr_size, const std::string& collection){
   std::string case_path = "Cases/" + collection + "/case.json";
   simdjson::dom::parser parser;
   simdjson::dom::element skins = parser.load(case_path);
