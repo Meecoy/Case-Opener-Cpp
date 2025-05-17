@@ -1,77 +1,172 @@
-#include <iostream>
+#include "libs/raylib/src/raylib.h"
 #include "utilities.hpp"
+#include "simdjson.h"
+
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
+#include <random>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <filesystem>
+
+const int WIN_W = 800;
+const int WIN_H = 600;
+const int FPS = 60;
+
+const float ITEM_WIDTH = 128.0f;
+const float ITEM_HEIGHT = 128.0f;
+const float SPACING = 150.0f;
+const int TOTAL_ITEMS = 100;
+const int WINNING_INDEX = 78;
+const float ROLL_DURATION = 1.5f;
+
+struct CaseItem {
+    Texture2D texture;
+    int index;
+    std::string rarity;
+
+    CaseItem(Texture2D tex, int idx, const std::string& rarityStr)
+        : texture(tex), index(idx), rarity(rarityStr) {}
+
+    void Draw(float scrollOffset) {
+        float x = index * SPACING - scrollOffset;
+        float y = 400;
+        Rectangle dst = { x, y, ITEM_WIDTH, ITEM_HEIGHT };
+
+        // Draw glow effect under the box
+        Color glowColor = SKYBLUE;
+        glowColor.a = 80; // Semi-transparent
+        DrawRectangleRounded({ x - 8, y - 8, ITEM_WIDTH + 16, ITEM_HEIGHT + 16 }, 0.2f, 10, glowColor);
+
+        // Draw background and texture
+        DrawRectangleRec(dst, { 100, 100, 100, 100 });
+        DrawTexturePro(texture, { 0, 0, (float)texture.width, (float)texture.height }, dst, { 0, 0 }, 0, WHITE);
+    }
+};
+
+// Easing function for smooth scroll
+float EaseOutCubic(float t) {
+    return 1 - pow(1 - t, 3);
+}
+
+Returned_skin draw_skin(const std::string& collection, int luck);
+
+void DrawSkin(const std::string& case_name, int luck) {
+    SetTargetFPS(FPS);
+    std::srand((unsigned int)std::time(nullptr));
+
+    int dummy_size;
+    Returned_skin* available_skins = selected_case_skins(dummy_size, case_name);
+    if (!available_skins) {
+        std::cerr << "Failed to load skins.\n";
+        return;
+    }
+
+    std::vector<Texture2D> textureDB;
+    for (int i = 0; i < dummy_size; ++i) {
+        textureDB.push_back(LoadTexture(available_skins[i].skin_path.c_str()));
+    }
+
+    std::vector<CaseItem> items;
+    Texture2D winningTexture;
+    Returned_skin final_skin;
+
+    float scrollOffset = 0.0f;
+    float targetOffset = 0.0f;
+    float elapsedTime = 0.0f;
+    bool rolling = false;
+    bool resultShown = false;
+
+    // Main loop
+    while (!WindowShouldClose()) {
+        float dt = GetFrameTime();
+
+        if (IsKeyPressed(KEY_SPACE) && !rolling) {
+            items.clear();
+
+            final_skin = draw_skin(case_name, luck);
+            Texture2D winnerTex = LoadTexture(final_skin.skin_path.c_str());
+            winningTexture = winnerTex;
+            
+            for (int i = 0; i < TOTAL_ITEMS; i++) {
+                bool isWinner = (i == WINNING_INDEX);
+                Texture2D tex = isWinner ? winnerTex : textureDB[std::rand() % textureDB.size()];
+                std::string rarity = isWinner ? final_skin.skin_quality : available_skins[std::rand() % dummy_size].skin_quality;
+                items.emplace_back(tex, i, rarity);
+            }
+
+            targetOffset = WINNING_INDEX * SPACING - (WIN_W / 2.0f - ITEM_WIDTH / 2.0f);
+            scrollOffset = 0.0f;
+            elapsedTime = 0.0f;
+            rolling = true;
+            resultShown = false;
+        }
+
+        if (rolling) {
+            elapsedTime += dt;
+            float t = elapsedTime / ROLL_DURATION;
+            if (t > 1.0f) {
+                t = 1.0f;
+                rolling = false;
+                resultShown = true;
+                write_to_inventory(final_skin);
+            }
+
+            scrollOffset = EaseOutCubic(t) * targetOffset;
+        }
+
+        BeginDrawing();
+        ClearBackground({ 25, 25, 25, 255 });
+
+        // Draw skins
+        for (auto& item : items) {
+            item.Draw(scrollOffset);
+        }
+
+        if (!resultShown)
+            DrawLine(WIN_W / 2, 0, WIN_W / 2, WIN_H, RED);
+
+        if (resultShown) {
+            Rectangle dst = { 325, 30, ITEM_WIDTH, ITEM_HEIGHT };
+            DrawRectangleRec(dst, { 80, 80, 80, 100 });
+            DrawTexturePro(winningTexture, { 0, 0, (float)winningTexture.width, (float)winningTexture.height },
+                           dst, { 0, 0 }, 0.0f, WHITE);
+
+            std::string name = final_skin.skin_title + " | " + final_skin.skin_weapon;
+            std::string stattrak = std::string("StatTrak: ") + (final_skin.skin_stat_track ? "Tak" : "Nie");
+            std::string description = final_skin.skin_description;
+            std::string floatStr = "Float: " + final_skin.skin_float;
+            std::string price = "Cena: $" + std::to_string(final_skin.skin_price);
+
+            DrawText(name.c_str(), 275, 170, 20, WHITE);
+            DrawText(description.c_str(), 275, 200, 15, WHITE);
+            DrawText(stattrak.c_str(), 275, 230, 15, WHITE);
+            DrawText(floatStr.c_str(), 275, 260, 15, WHITE);
+            DrawText(price.c_str(), 275, 290, 15, WHITE);
+        }
+
+        EndDrawing();
+    }
+
+    // Unload textures and clear list
+    for (auto& tex : textureDB) UnloadTexture(tex);
+    UnloadTexture(winningTexture);
+    delete[] available_skins;
+}
+
 int main() {
-  
-  std::string chosen_case = "polityczka";
+    InitWindow(WIN_W, WIN_H, "Case Opening");
 
-  Returned_skin skinek = draw_skin(chosen_case);
-  std::cout << "Skinek: " << skinek.skin_title << std::endl;
-  std::cout << "Jakość: " << skinek.skin_quality << std::endl;
-  std::cout << "Opis: " << skinek.skin_description << std::endl;
-  std::cout << "Postscriptum: " << skinek.skin_ps << std::endl;
-  std::cout << "Ścieżka do skina: " << skinek.skin_path << std::endl;
-  std::cout << "Rodzaj broni: " << skinek.skin_weapon << std::endl;
-  std::cout << "Float broni: " << skinek.skin_float << std::endl;
-  std::cout << "Stat track: " << skinek.skin_stat_track << std::endl;
-  std::cout << "Cena: " << skinek.skin_price << std::endl;
-  
-  int size;
-  Returned_case* skrzynki = available_cases(size);
-  std::cout << "Wybrana skrzynka: " << chosen_case << std::endl;
+    User_data user = get_user_info();
+    std::string selected_case = "polityczka";
+    int luck = 0;
 
-  /*for(int i = 0; i < size; i++){
-    std::cout << "Skrzynka: " << skrzynki[i].case_title << "\nObrazek skrzynki: " << skrzynki[i].case_path << std::endl;
-  }
+    // Run the main loop
+    DrawSkin(selected_case, luck);
 
-  delete [] skrzynki;
-  
-  Returned_skin* skinki_w_skrzynce = selected_case_skins(size, chosen_case);
-
-  for(int i = 0; i < size; i++) {
-    std::cout << "Skin numer " << i + 1 << ": " << skinki_w_skrzynce[i].skin_title << std::endl;
-    std::cout << "Rzadkość: " << skinki_w_skrzynce[i].skin_quality << std::endl;
-    std::cout << "Broń: " << skinki_w_skrzynce[i].skin_weapon << std::endl;
-    std::cout << "Ścieżka do skina: " << skinki_w_skrzynce[i].skin_path << std::endl;
-  }
-
-  delete [] skinki_w_skrzynce;
-
-  write_to_inventory(skinek); 
-  
-  Returned_skin* dropniete_skinki = get_inventory(size);
-
-  std::cout << "\nAktualny ekwipunek: \n"; 
-
-  for(int i = 0; i < size; i++) {
-    std::cout << "Dropnięty skinek numer " << i + 1 << ": " << dropniete_skinki[i].skin_title << std::endl;
-    std::cout << "Opis skinka: " << dropniete_skinki[i].skin_description << std::endl;
-    std::cout << "Postscriptum: " << dropniete_skinki[i].skin_ps << std::endl;
-    std::cout << "Jakość: " << dropniete_skinki[i].skin_quality << std::endl;
-    std::cout << "Rodzaj broni: " << dropniete_skinki[i].skin_weapon << std::endl;
-    std::cout << "Ścieżka do skina: " << dropniete_skinki[i].skin_path << std::endl;
-    std::cout << "Float broni: " << dropniete_skinki[i].skin_float << std::endl;
-    std::cout << "Stat track: " << dropniete_skinki[i].skin_stat_track << std::endl;
-  }
-*/
-
-  User_data uzytkownik = get_user_info();
-  std::cout << "Nazwa uzytkownika: " << uzytkownik.username << std::endl;
-  std::cout << "Ilość pieniędzy: " << uzytkownik.money << std::endl;
-
-  //change_user_data(200);
-  
-  //sell_skin(1);
-  
-  Case_bot bocik = Case_bot("Bot", 10);
-
-  bool bitwa = bocik.Fight(chosen_case, 4);
-
-  if (bitwa) {
-    std::cout << "Wygrałeś!" << std::endl;
-  } else {
-    std::cout << "Przegrałeś..." << std::endl;
-  }
-
-
-  return 0;
+    CloseWindow();
+    return 0;
 }
