@@ -1,0 +1,91 @@
+[
+  {
+    "title": "Komenda",
+    "description": "Glock 18 to dogodny pistolet w pierwszej rundzie, który działa najlepiej na nieopancerzonych przeciwnikach i pozwala strzelać serią 3 strzałów.",
+    "ps": "Biegnij po swój makowiec",
+    "quality": "klasy tajne",
+    "weapon": "Glock-18",
+    "skin": "Cases/tarnoska/Skins/Komenda.png"
+  },
+
+  {
+    "title": "Stachu FBI",
+    "description": "Celniejszy, ale zadający mniej obrażeń, co swój odpowiednik - AK-47, M4A4 to najczęściej wybierany przez antyterrorystów automatyczny karabin szturmowy.",
+    "ps": "",
+    "quality": "klasy poufne",
+    "weapon": "M4A4",
+    "skin": "Cases/tarnoska/Skins/StachuFBI.png"
+  },
+
+  {
+    "title": "Tarnovia",
+    "description": "W pełni automatyczna wersja CZ75, najlepsza na krótkim dystansie, pozwala zmienić losy walki i zdobyć broń przeciwnika. Przy swoim małym magazynku wymaga jednak celnych strzałów i pilnowania liczby nabojów.",
+    "ps": "",
+    "quality": "spoza obiegu",
+    "weapon": "CZ75-Auto",
+    "skin": "Cases/tarnoska/Skins/Tarnovia.png"
+  },
+
+  {
+    "title": "Unia",
+    "description": "Idealny pistolet dla terrorysty w ciągłym ruchu - Tec-9 oferuje zabójczą siłę ognia na krótki dystans oraz pojemny magazynek.",
+    "ps": "",
+    "quality": "spoza obiegu",
+    "weapon": "Tec-9",
+    "skin": "Cases/tarnoska/Skins/Unia.png"
+  },
+
+  {
+    "title": "",
+    "description": "",
+    "ps": "",
+    "quality": "",
+    "weapon": "",
+    "skin": ""
+  },
+
+  {
+    "title": "",
+    "description": "",
+    "ps": "",
+    "quality": "",
+    "weapon": "",
+    "skin": ""
+  },
+
+  {
+    "title": "",
+    "description": "",
+    "ps": "",
+    "quality": "",
+    "weapon": "",
+    "skin": ""
+  },
+
+  {
+    "title": "",
+    "description": "",
+    "ps": "",
+    "quality": "",
+    "weapon": "",
+    "skin": ""
+  },
+
+  {
+    "title": "",
+    "description": "",
+    "ps": "",
+    "quality": "",
+    "weapon": "",
+    "skin": ""
+  },
+
+  {
+    "title": "",
+    "description": "",
+    "ps": "",
+    "quality": "",
+    "weapon": "",
+    "skin": ""
+  }
+]
