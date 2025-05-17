@@ -63,21 +63,21 @@
   },
 
   {
-    "title": "",
-    "description": "",
+    "title": "Tarnow",
+    "description": "Glock 18 to dogodny pistolet w pierwszej rundzie, który działa najlepiej na nieopancerzonych przeciwnikach i pozwala strzelać serią 3 strzałów.",
     "ps": "",
-    "quality": "",
-    "weapon": "",
-    "skin": ""
+    "quality": "spoza obiegu",
+    "weapon": "Glock-18",
+    "skin": "Cases/tarnowska/Skins/Tarnow.png"
   },
 
   {
-    "title": "",
-    "description": "",
+    "title": "ZSME",
+    "description": "Kosztowny G3SG1 znacznie spowalnia posiadacza, ale nadrabia to szybkostrzelnością znacznie wyższą od tej w innych karabinach snajperskich.",
     "ps": "",
-    "quality": "",
-    "weapon": "",
-    "skin": ""
+    "quality": "przemysłowej jakości",
+    "weapon": "G3SG1",
+    "skin": "Cases/tarnowska/Skins/ZSME.png"
   },
 
   {
