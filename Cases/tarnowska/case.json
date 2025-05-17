@@ -5,7 +5,7 @@
     "ps": "Biegnij po swój makowiec",
     "quality": "klasy tajne",
     "weapon": "Glock-18",
-    "skin": "Cases/tarnoska/Skins/Komenda.png"
+    "skin": "Cases/tarnowska/Skins/Komenda.png"
   },
 
   {
@@ -14,7 +14,7 @@
     "ps": "",
     "quality": "klasy poufne",
     "weapon": "M4A4",
-    "skin": "Cases/tarnoska/Skins/StachuFBI.png"
+    "skin": "Cases/tarnowska/Skins/StachuFBI.png"
   },
 
   {
@@ -23,7 +23,7 @@
     "ps": "",
     "quality": "spoza obiegu",
     "weapon": "CZ75-Auto",
-    "skin": "Cases/tarnoska/Skins/Tarnovia.png"
+    "skin": "Cases/tarnowska/Skins/Tarnovia.png"
   },
 
   {
@@ -32,34 +32,34 @@
     "ps": "",
     "quality": "spoza obiegu",
     "weapon": "Tec-9",
-    "skin": "Cases/tarnoska/Skins/Unia.png"
+    "skin": "Cases/tarnowska/Skins/Unia.png"
   },
 
   {
-    "title": "",
-    "description": "",
+    "title": "Azoty",
+    "description": "Wszechstronny, ale kosztowny niemiecki pistolet maszynowy MP7 to idealny wybór dla walk na krótkim zasięgu.",
     "ps": "",
-    "quality": "",
-    "weapon": "",
-    "skin": ""
+    "quality": "przemysłowej jakości",
+    "weapon": "MP7",
+    "skin": "Cases/tarnowska/Skins/Azoty.png"
   },
 
   {
-    "title": "",
-    "description": "",
+    "title": "Default Famas",
+    "description": "Tańsza opcja dla graczy bez gotówki. FAMAS efektywnie wypełnia lukę między drogimi karabinami a mniej efektywnymi pistoletami maszynowymi.",
     "ps": "",
-    "quality": "",
-    "weapon": "",
-    "skin": ""
+    "quality": "wojskowej jakości",
+    "weapon": "FAMAS",
+    "skin": "Cases/tarnowska/Skins/DefaultFamas.png"
   },
 
   {
-    "title": "",
-    "description": "",
+    "title": "Mustafa",
+    "description": "Pistolet maszynowy Bizon zadaje niewielkie obrażenia, ale posiada unikatowy, pojemny magazynek ślimakowy, który szybko się przeładowuje.",
     "ps": "",
-    "quality": "",
-    "weapon": "",
-    "skin": ""
+    "quality": "przemysłowej jakości",
+    "weapon": "PP-Bizon",
+    "skin": "Cases/tarnowska/Skins/Mustafa.png"
   },
 
   {
