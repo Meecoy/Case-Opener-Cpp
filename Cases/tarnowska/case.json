@@ -11,7 +11,7 @@
   {
     "title": "Stachu FBI",
     "description": "Celniejszy, ale zadający mniej obrażeń, co swój odpowiednik - AK-47, M4A4 to najczęściej wybierany przez antyterrorystów automatyczny karabin szturmowy.",
-    "ps": "",
+    "ps": "Być tak wyluzowanym",
     "quality": "klasy poufne",
     "weapon": "M4A4",
     "skin": "Cases/tarnowska/Skins/StachuFBI.png"
@@ -20,7 +20,7 @@
   {
     "title": "Tarnovia",
     "description": "W pełni automatyczna wersja CZ75, najlepsza na krótkim dystansie, pozwala zmienić losy walki i zdobyć broń przeciwnika. Przy swoim małym magazynku wymaga jednak celnych strzałów i pilnowania liczby nabojów.",
-    "ps": "",
+    "ps": "Nie bijcie, prosze",
     "quality": "spoza obiegu",
     "weapon": "CZ75-Auto",
     "skin": "Cases/tarnowska/Skins/Tarnovia.png"
@@ -29,7 +29,7 @@
   {
     "title": "Unia",
     "description": "Idealny pistolet dla terrorysty w ciągłym ruchu - Tec-9 oferuje zabójczą siłę ognia na krótki dystans oraz pojemny magazynek.",
-    "ps": "",
+    "ps": "Nie bijcie, prosze",
     "quality": "spoza obiegu",
     "weapon": "Tec-9",
     "skin": "Cases/tarnowska/Skins/Unia.png"
@@ -38,7 +38,7 @@
   {
     "title": "Azoty",
     "description": "Wszechstronny, ale kosztowny niemiecki pistolet maszynowy MP7 to idealny wybór dla walk na krótkim zasięgu.",
-    "ps": "",
+    "ps": "Moscice, z deedykacją dla Tryby",
     "quality": "przemysłowej jakości",
     "weapon": "MP7",
     "skin": "Cases/tarnowska/Skins/Azoty.png"
@@ -47,7 +47,7 @@
   {
     "title": "Default Famas",
     "description": "Tańsza opcja dla graczy bez gotówki. FAMAS efektywnie wypełnia lukę między drogimi karabinami a mniej efektywnymi pistoletami maszynowymi.",
-    "ps": "",
+    "ps": "Tak to Skovyr, nie powinno go byc w Tarnowie",
     "quality": "wojskowej jakości",
     "weapon": "FAMAS",
     "skin": "Cases/tarnowska/Skins/DefaultFamas.png"
@@ -56,7 +56,7 @@
   {
     "title": "Mustafa",
     "description": "Pistolet maszynowy Bizon zadaje niewielkie obrażenia, ale posiada unikatowy, pojemny magazynek ślimakowy, który szybko się przeładowuje.",
-    "ps": "",
+    "ps": "Najlepszy kebab",
     "quality": "przemysłowej jakości",
     "weapon": "PP-Bizon",
     "skin": "Cases/tarnowska/Skins/Mustafa.png"
@@ -65,7 +65,7 @@
   {
     "title": "Tarnow",
     "description": "Glock 18 to dogodny pistolet w pierwszej rundzie, który działa najlepiej na nieopancerzonych przeciwnikach i pozwala strzelać serią 3 strzałów.",
-    "ps": "",
+    "ps": "Piękne miasto",
     "quality": "spoza obiegu",
     "weapon": "Glock-18",
     "skin": "Cases/tarnowska/Skins/Tarnow.png"
@@ -74,18 +74,27 @@
   {
     "title": "ZSME",
     "description": "Kosztowny G3SG1 znacznie spowalnia posiadacza, ale nadrabia to szybkostrzelnością znacznie wyższą od tej w innych karabinach snajperskich.",
-    "ps": "",
+    "ps": "Miejsce które wszyscy kochamy",
     "quality": "przemysłowej jakości",
     "weapon": "G3SG1",
     "skin": "Cases/tarnowska/Skins/ZSME.png"
   },
 
   {
-    "title": "",
-    "description": "",
-    "ps": "",
-    "quality": "",
-    "weapon": "",
-    "skin": ""
+    "title": "KFC",
+    "description": "Niewielka cena Novy czyni ją bronią dobrą do zasadzek dla drużyny bez wielkiej ilości gotówki.",
+    "ps": "Z dedykacją dla Disiego",
+    "quality": "spoza obiegu",
+    "weapon": "Nova",
+    "skin": "Cases/tarnowska/Skins/KFC.png"
+  },
+
+  {
+    "title": "Ratusz",
+    "description": "Broń, której konstrukcja i wygląd od czasów II wojny światowej się niewiele zmieniła - bagnet wciąż ma swoje miejsce we współczesnych strategiach militarnych. Szarże z bagnetami były efektywnie używane podczas II wojny w Zatoce Perskiej, a także wojny w Afganistanie.",
+    "ps": "Prosto z rynku",
+    "quality": "klasy tajne-kosa",
+    "weapon": "Bagnet",
+    "skin": "Cases/tarnowska/Skins/KFC.png"
   }
 ]

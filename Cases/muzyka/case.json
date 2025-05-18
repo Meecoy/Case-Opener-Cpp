@@ -1,8 +1,62 @@
 [
+   {
+       "title": "Parostatek",
+       "description": "Celny i potężny karabin szturmowy AUG z lunetą rekompensuje długi czas przeładowania niskim rozrzutem i wysoką szybkostrzelnością.",
+       "ps": "Lepszy od Titanica",
+       "quality": "przemysłowej jakości",
+       "weapon": "AUG",
+       "skin": "Cases/muzyka/Skins/Parostatek.png"
+    },
+
+    {
+       "title": "Pszczółka Maja",
+       "description": "Tańsza opcja dla graczy bez gotówki. FAMAS efektywnie wypełnia lukę między drogimi karabinami a mniej efektywnymi pistoletami maszynowymi.",
+       "ps": "Gdzieś jes lecz nie wiadomo gdzie... ",
+       "quality": "przemysłowej jakości",
+       "weapon": "FAMAS",
+       "skin": "Cases/muzyka/Skins/PszczolkaMaja.png"
+    }, 
+   
+    {
+       "title": "S-M-O-K",
+       "description": "Posiadający mniejszy magazynek niż jego niewytłumiony odpowiednik, karabin M4A1-S zapewnia cichsze strzały, mniejszy odrzut i lepszą celność.",
+       "ps": "Fokus Smok...",
+       "quality": "przemysłowej jakości",
+       "weapon": "M4A1-S",
+       "skin": "Cases/muzyka/Skins/S-M-O-K.png"
+    },
+
+    {
+       "title": "Mechaniczna Pomarańcza",
+       "description": "Dostępny wyłącznie dla terrorystów SG553 z lunetą to alternatywa dla AK-47 dzięki możliwości efektywnego rażenia na dalekim zasięgu.",
+       "ps": "A co to jest?",
+       "quality": "spoza obiegu",
+       "weapon": "SG 553",
+       "skin": "Cases/muzyka/Skins/MechanicznaPomarancza.png"
+    },
+
+    {
+       "title": "52",
+       "description": "Celny i dobrze penetrujący pancerz Five-Seven to drogi, wolny w przeładowaniu pistolet, który nadrabia te wady 20-nabojowym magazynkiem i wybaczalnym odrzutem.",
+       "ps": "Dębiec zapraszamy...",
+       "quality": "spoza obiegu",
+       "weapon": "Five-SeveN",
+       "skin": "Cases/muzyka/Skins/52.png"
+    },
+
+    {
+       "title": "Étude Op. 25, No. 5 in E Minor 'Wrong Note'",
+       "description": "XM1014 to potężna strzelba półautomatyczna, która swoją cenę rekompensuje możliwością szybkiego wypełnienia dowolnego pomieszczenia ołowiem",
+       "ps": "Nawet nie chce mi się tego czytać",
+       "quality": "spoza obiegu",
+       "weapon": "XM1014",
+       "skin": "Cases/muzyka/Skins/Pianinko.png"
+    },
+
     {
        "title": "Caliber 44",
        "description": "Równie drogi co potężny, Desert Eagle to pistolet-ikona, który ciężko opanować, ale jest zaskakująco celny na dalekim zasięgu.",
-       "ps": "",
+       "ps": "śp. Maagik; śp. ŚP. Brat Joka; Abradab",
        "quality": "klasy poufne",
        "weapon": "Desert Eagle",
        "skin": "Cases/muzyka/Skins/Caliber44.png"
@@ -11,27 +65,27 @@
     {
        "title": "Gruby Czarny Kot",
        "description": "Dostępna tylko dla antyterrorystów strzelba Mag-7 zadaje olbrzymie obrażenia z bliska. Magazynkowe przeładowywanie czyni ją świetną bronią taktyczną.",
-       "ps": "",
+       "ps": "Przebiegł nam drogę, a ...",
        "quality": "klasy tajne",
        "weapon": "MAG-7",
        "skin": "Cases/muzyka/Skins/GrubyCzarnyKot.png"
     },
 
     {
-       "title": "Mechaniczna Pomarańcza",
-       "description": "Dostępny wyłącznie dla terrorystów SG553 z lunetą to alternatywa dla AK-47 dzięki możliwości efektywnego rażenia na dalekim zasięgu.",
-       "ps": "",
-       "quality": "spoza obiegu",
-       "weapon": "SG 553",
-       "skin": "Cases/muzyka/Skins/MechanicznaPomarancza.png"
+       "title": "Przekorny Los",
+       "description": "Stworzony w Szwajcarii doborowy pistolet maszynowy MP9 to ergonomiczna broń polimerowa, ceniona przez prywatne firmy ochroniarskie.",
+       "ps": "Los chce ze mna grac w pokera...",
+       "quality": "klasy tajne",
+       "weapon": "Desert Eagle",
+       "skin": "Cases/muzyka/Skins/Caliber44.png"
     },
 
     {
-       "title": "S-M-O-K",
-       "description": "Posiadający mniejszy magazynek niż jego niewytłumiony odpowiednik, karabin M4A1-S zapewnia cichsze strzały, mniejszy odrzut i lepszą celność.",
-       "ps": "",
-       "quality": "przemysłowej jakości",
-       "weapon": "M4A1-S",
-       "skin": "Cases/muzyka/Skins/S-M-O-K.png"
+       "title": "HIP-HOP",
+       "description": "Karambit to nóż o ostrzu przypominającym pazur tygrysa. Został on stworzony jako część sztuki walki zwanej silat, popularnej w Azji Południowo-Wschodniej. Nóż ten charakteryzuje się odwróconą rękojeścią, z palcem wskazującym przełożonym przez otwór. ",
+       "ps": "W twoim sercu",
+       "quality": "klasy tajne-kosa",
+       "weapon": "Karambit",
+       "skin": "Cases/muzyka/Skins/HIPHOP.png"
     }
 ]
