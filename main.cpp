@@ -137,12 +137,10 @@ void DrawSkin(const std::string& case_name, int luck) {
 
             std::string name = final_skin.skin_title + " | " + final_skin.skin_weapon;
             std::string stattrak = std::string("StatTrak: ") + (final_skin.skin_stat_track ? "Tak" : "Nie");
-            std::string description = final_skin.skin_description;
             std::string floatStr = "Float: " + final_skin.skin_float;
             std::string price = "Cena: $" + std::to_string(final_skin.skin_price);
 
             DrawText(name.c_str(), 275, 170, 20, WHITE);
-            DrawText(description.c_str(), 275, 200, 15, WHITE);
             DrawText(stattrak.c_str(), 275, 230, 15, WHITE);
             DrawText(floatStr.c_str(), 275, 260, 15, WHITE);
             DrawText(price.c_str(), 275, 290, 15, WHITE);
