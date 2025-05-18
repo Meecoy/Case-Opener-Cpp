@@ -1,0 +1,37 @@
+[
+    {
+       "title": "Caliber 44",
+       "description": "Równie drogi co potężny, Desert Eagle to pistolet-ikona, który ciężko opanować, ale jest zaskakująco celny na dalekim zasięgu.",
+       "ps": "",
+       "quality": "klasy poufne",
+       "weapon": "Desert Eagle",
+       "skin": "Cases/muzyka/Skins/Caliber44.png"
+    },
+
+    {
+       "title": "Gruby Czarny Kot",
+       "description": "Dostępna tylko dla antyterrorystów strzelba Mag-7 zadaje olbrzymie obrażenia z bliska. Magazynkowe przeładowywanie czyni ją świetną bronią taktyczną.",
+       "ps": "",
+       "quality": "klasy tajne",
+       "weapon": "MAG-7",
+       "skin": "Cases/muzyka/Skins/GrubyCzarnyKot.png"
+    },
+
+    {
+       "title": "Mechaniczna Pomarańcza",
+       "description": "Dostępny wyłącznie dla terrorystów SG553 z lunetą to alternatywa dla AK-47 dzięki możliwości efektywnego rażenia na dalekim zasięgu.",
+       "ps": "",
+       "quality": "spoza obiegu",
+       "weapon": "SG 553",
+       "skin": "Cases/muzyka/Skins/MechanicznaPomarancza.png"
+    },
+
+    {
+       "title": "S-M-O-K",
+       "description": "Posiadający mniejszy magazynek niż jego niewytłumiony odpowiednik, karabin M4A1-S zapewnia cichsze strzały, mniejszy odrzut i lepszą celność.",
+       "ps": "",
+       "quality": "przemysłowej jakości",
+       "weapon": "M4A1-S",
+       "skin": "Cases/muzyka/Skins/S-M-O-K.png"
+    }
+]
