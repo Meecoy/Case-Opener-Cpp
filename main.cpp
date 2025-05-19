@@ -156,7 +156,7 @@ void DrawSkin(const std::string& case_name, int luck) {
 }
 
 int main() {
-    InitWindow(WIN_W, WIN_H, "Case Opening");
+    InitWindow(WIN_W, WIN_H, "Case Opener");
 
     User_data user = get_user_info();
     std::string selected_case = "polityczka";
